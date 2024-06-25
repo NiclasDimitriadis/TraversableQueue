@@ -23,9 +23,6 @@ private:
     const std::unique_ptr<ContentType[]> memory_ptr;
     const std::span<ContentType, length> memory_span;
 
-    template<auto, typename...>
-    auto traverse_content_logic(){};
-
     template<auto traverser, typename TraverseStateType, typename... Args>
     requires (sizeof...(Args) <= 1) &&
     std::is_invocable_r_v<std::tuple<TraverseStateType, bool, bool>, decltype(traverser), TraverseStateType, ContentType&, Args...>
