@@ -31,7 +31,8 @@ Simple queue that provides the user with an interface to query, manipulate and d
 #### the traverser object
 - centerpiece of the `traverse_content` method templates
 - has to be `constexpr`
-- has to be callable with a first argument of type `TraverseStateType`, a second of type `ContentType&` and an optional second argument of the users choosing (more arguments can obviously be passed if the second argument is a sum type)
+- has to be callable with a first argument of type `TraverseStateType`, a second of type `ContentType&` and an optional third argument of the users choosing (more arguments can obviously be passed if the second argument is a sum type)
+- `TraverseStateType` is provided by the user via the choice of `traveser`
 - has to return `std::tuple<TraverseStateType, bool, bool>`
 - when iterating over content, `TraverseStateType` is returned during every iteration and passed to `traverser` in the next, thus tranferring state across iterations
 - `traverser` may change the queue's content via its second argument
@@ -46,7 +47,7 @@ Simple queue that provides the user with an interface to query, manipulate and d
 - method template that takes a `traverser` object as a non-type parameter
 - the properties of `traverser` described above are checked statically
 - the method takes `TraverseStateType` as its first argument, signifying the initial state of traversal
-- second argument is optional and can be chosen by user (method template overload omitting the second argument is provided and has an analogous signature)
+- the second argument is optional and can be chosen by user (method template overload omitting the second argument is provided and has an analogous signature)
 - type checks use `function_signature` and `param_pack` from the `TMP_lib` repo
 
 
