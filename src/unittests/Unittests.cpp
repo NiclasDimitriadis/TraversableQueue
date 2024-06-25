@@ -57,7 +57,7 @@ TEST_CASE("testing traversal of queue content"){
     // enqueue 20 four times
     LongQueueType test_queue;
     for(size_t i = 0; i < 4; ++i){
-        test_queue.enqueue(20);
+        const bool enq_res = test_queue.enqueue(20);
     };
 
     // use dequeue_n to dequeue 50
