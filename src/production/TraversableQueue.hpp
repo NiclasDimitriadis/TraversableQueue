@@ -43,7 +43,7 @@ public:
     requires (function_signature::arg_types_t<f>::size == 3)
     std::tuple_element_t<0, function_signature::ret_type_t<f>>
     traverse_content(function_signature::arg_types_t<f>::template index_t<0>,
-        function_signature::arg_types_t<f>::template truncate_front_t<3>::template index_t<0>) noexcept;
+        function_signature::arg_types_t<f>::template index_t<3>) noexcept;
 
     // case if f takes no additional argument
     template<auto f>
@@ -95,23 +95,23 @@ return traversal_state;
 };
 
 TEMPL_PARAMS
-template<auto f>
-requires (function_signature::arg_types_t<f>::size == 3)
-std::tuple_element_t<0, function_signature::ret_type_t<f>>
-TEMPL_SPECIALIZATION::traverse_content(function_signature::arg_types_t<f>::template index_t<0> initial_state,
-    function_signature::arg_types_t<f>::template truncate_front_t<3>::template index_t<0> arg) noexcept{
-    using Arg = function_signature::arg_types_t<f>::template truncate_front_t<3>::template index_t<0>;
-    using State = function_signature::arg_types_t<f>::template index_t<0>;
-    return traverse_content_logic<f, State, Arg>(initial_state, std::forward<Arg>(arg));
+template<auto traverser>
+requires (function_signature::arg_types_t<traverser>::size == 3)
+std::tuple_element_t<0, function_signature::ret_type_t<traverser>>
+TEMPL_SPECIALIZATION::traverse_content(function_signature::arg_types_t<traverser>::template index_t<0> initial_state,
+    function_signature::arg_types_t<traverser>::template index_t<3> arg) noexcept{
+    using Arg = function_signature::arg_types_t<traverser>::template index_t<3>;
+    using State = function_signature::arg_types_t<traverser>::template index_t<0>;
+    return traverse_content_logic<traverser, State, Arg>(initial_state, std::forward<Arg>(arg));
 };
 
 TEMPL_PARAMS
-template<auto f>
-requires (function_signature::arg_types_t<f>::size == 2)
-std::tuple_element_t<0, function_signature::ret_type_t<f>>
-TEMPL_SPECIALIZATION::traverse_content(function_signature::arg_types_t<f>::template index_t<0> initial_state) noexcept{
-    using State = function_signature::arg_types_t<f>::template index_t<0>;
-    return traverse_content_logic<f, State>(initial_state);
+template<auto traverser>
+requires (function_signature::arg_types_t<traverser>::size == 2)
+std::tuple_element_t<0, function_signature::ret_type_t<traverser>>
+TEMPL_SPECIALIZATION::traverse_content(function_signature::arg_types_t<traverser>::template index_t<0> initial_state) noexcept{
+    using State = function_signature::arg_types_t<traverser>::template index_t<0>;
+    return traverse_content_logic<traverser, State>(initial_state);
 };
 
 #undef TEMPL_PARAMS
